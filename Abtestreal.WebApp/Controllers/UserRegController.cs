@@ -51,16 +51,12 @@ namespace Abtestreal.WebApp.Controllers
                 foreach(var user in users)
                 {
                     if (user.LastActivityDate >= lastActivityDate)
-                    {
-                        //userSer = new UserService { Id = user.Id, LastActivityDate = user.LastActivityDate, RegistrationDate = user.RegistrationDate, UserId = user.UserId };
-                        
+                    { 
                         userListA.Add(user.ToUserRegService());
                         countA++;
                     }
                     if (user.RegistrationDate >= dateRegistration)
                     {
-                        //userSer = new UserService { Id = user.Id, LastActivityDate = user.LastActivityDate, RegistrationDate = user.RegistrationDate, UserId = user.UserId };
-                        
                         userListR.Add(user.ToUserRegService());
                         countR++;
                     }
