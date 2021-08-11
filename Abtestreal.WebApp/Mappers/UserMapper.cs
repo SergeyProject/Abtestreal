@@ -16,7 +16,6 @@ namespace Abtestreal.WebApp.Mappers
                 UserId = userService.UserId
             };
 
-
         }
     }
 }

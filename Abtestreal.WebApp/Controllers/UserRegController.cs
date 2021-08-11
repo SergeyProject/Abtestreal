@@ -8,6 +8,7 @@ using Abtestreal.Service.Models;
 using Abtestreal.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Abtestreal.WebApp.Mappers;
+using Abtestreal.Service.Service;
 
 namespace Abtestreal.WebApp.Controllers
 {
@@ -21,7 +22,7 @@ namespace Abtestreal.WebApp.Controllers
         }
 
 
-        // Получение каких либо значений
+        // Получение значений всех пользователей
         [HttpGet]
         [Route("api/GetAllApp")]
         public IActionResult GetAllApp()
@@ -42,27 +43,9 @@ namespace Abtestreal.WebApp.Controllers
         {
             try
             {
-                List<UserService> userListA = new List<UserService>();
-                List<UserService> userListR = new List<UserService>();
-                int countA = 0;
-                int countR = 0;
-                List<UserRegDal> users = (List<UserRegDal>)_applicationService.GetAll();
-               
-                foreach(var user in users)
-                {
-                    if (user.LastActivityDate >= lastActivityDate)
-                    { 
-                        userListA.Add(user.ToUserRegService());
-                        countA++;
-                    }
-                    if (user.RegistrationDate >= dateRegistration)
-                    {
-                        userListR.Add(user.ToUserRegService());
-                        countR++;
-                    }
-                }
-                double result = countA / countR * 100;
-                return Ok(result.ToString());
+                CalculateService calculate = new CalculateService(_applicationService);
+                string str = calculate.Calc(dateRegistration, lastActivityDate);
+                return Ok(str);
             }
             catch (Exception ex)
             {
@@ -72,7 +55,7 @@ namespace Abtestreal.WebApp.Controllers
 
 
 
-        // Зделать запись
+        // Сделать запись
         [HttpPost]
         [Route("api/CreateApplication")]
         public IActionResult CreateApplication([FromBody] UserService user)
